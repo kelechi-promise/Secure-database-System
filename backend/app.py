@@ -246,3 +246,10 @@ def change_password(user_id):
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
+
+
+from flask import Flask
+from flask_cors import CORS
+
+app = Flask(__name__)
+CORS(app)  # This allows requests from your Vercel frontend!   
