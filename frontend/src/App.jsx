@@ -1,3 +1,38 @@
+// src/api.js
+
+// Automatically uses your Vercel environment variable, with your live Render URL as a fallback
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://secure-database-system.onrender.com';
+
+/**
+ * Helper function to handle API requests to your Flask backend
+ */
+export async function apiRequest(endpoint, method = 'GET', data = null) {
+  const options = {
+    method,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  if (data) {
+    options.body = JSON.stringify(data);
+  }
+
+  try {
+    const response = await fetch(`${API_BASE_URL}${endpoint}`, options);
+    const result = await response.json();
+    
+    if (!response.ok) {
+      throw new Error(result.error || 'Something went wrong with the backend server.');
+    }
+    
+    return result;
+  } catch (error) {
+    console.error('API Error:', error);
+    throw error;
+  }
+}
+
 import { useState, useEffect } from 'react';
 
 export default function App() {
